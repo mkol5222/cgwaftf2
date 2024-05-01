@@ -1,0 +1,4 @@
+- name: one4x.klaud.online
+  backend: https://one.one.one.one
+- name: dev2.klaud.online
+  backend: https://dev.to
