@@ -2,8 +2,8 @@
 #   backend: https://one.one.one.one
 - name: dev2.klaud.online
   backend: https://dev.to
-- name: ops.klaud.online
-  backend: https://community.ops.io
+- name: jablotron.klaud.online
+  backend: https://www.jablotron.com
 - name: nuxt.klaud.online
   backend: https://nuxt.com
 - name: ifconfig.klaud.online
