@@ -78,9 +78,9 @@ jobs:
         run: |
           cd 01-webapps
           terraform init; terraform validate; 
-          terraform plan -out=../tfplan -input=false -no-color
+          terraform plan -var publish=true -out=../tfplan -input=false -no-color
           terraform show -json ../tfplan > tfplan.json
-          terraform apply -auto-approve -var publish=true ../tfplan
+          terraform apply -auto-approve  ../tfplan
           cd ..
           cd 02-dns
           terraform init; terraform validate; 
