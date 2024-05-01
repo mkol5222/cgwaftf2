@@ -1,4 +1,4 @@
-name: TFplan
+name: Terraform
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
     types: [opened]
 
 jobs:
-  deploy:
+  terraform:
     runs-on: ubuntu-latest
     permissions:
         contents: read
@@ -24,52 +24,7 @@ jobs:
         with:
           terraform_version: 1.6.6
         
-      - id: getTerraformFiles
-        name: Get Terraform State
-        run: |
-          $Repo = "${{ github.repository }}"
-          $BaseUri = "https://api.github.com"
-          $ArtifactUri = "$BaseUri/repos/$Repo/actions/artifacts"
-          $Token = "${{ github.token }}" | ConvertTo-SecureString -AsPlainText
-          Write-Host "Artifact URI = $($ArtifactUri): $($Token)"
-          try {
-            $RestResponse = Invoke-RestMethod -Authentication Bearer -Uri $ArtifactUri -Token $Token | Select-Object -ExpandProperty artifacts
-            if ($RestResponse){
-              $MostRecentArtifactURI = $RestResponse | Sort-Object -Property created_at -Descending | where name -eq "tfstate" | Select-Object -First 1 | Select-Object -ExpandProperty archive_download_url
-              Write-Host "Most recent STATE artifact URI = $MostRecentArtifactURI"
-              if ($MostRecentArtifactURI){
-                Write-Host "Downloading artifact to state.zip"
-                try {
-                  Invoke-RestMethod -uri $MostRecentArtifactURI -Token $Token -Authentication bearer -outfile ./state.zip
-                  Expand-Archive ./state.zip
-                  Write-Host "Extracted state.zip"
-                  Move-Item -Path ./state/terraform.tfstate -Destination ./01-web-apps/terraform.tfstate
-                } catch {
-                    Write-Host "Error downloading state artifact: $MostRecentArtifactURI"
-                }
-              }
-              $MostRecentArtifactURI = $RestResponse | Sort-Object -Property created_at -Descending | where name -eq "tfstate-dns" | Select-Object -First 1 | Select-Object -ExpandProperty archive_download_url
-              Write-Host "Most recent STATE-DNS artifact URI = $MostRecentArtifactURI"
-              if ($MostRecentArtifactURI){
-                Write-Host "Downloading artifact to state-dns.zip"
-                try {
-                  Invoke-RestMethod -uri $MostRecentArtifactURI -Token $Token -Authentication bearer -outfile ./state-dns.zip
-                  Expand-Archive ./state-dns.zip
-                  Write-Host "Extracted state-dns.zip"
-                  Move-Item -Path ./state-dns/terraform.tfstate -Destination ./02-dns/terraform.tfstate
-                } catch {
-                    Write-Host "Error downloading state artifact: $MostRecentArtifactURI"
-                }
-              }
-
-            }
-          } catch {
-            Write-Host "Error getting artifacts $($ArtifactUri): $($_.Exception.Message)"
-          }
-        shell: pwsh
-        continue-on-error: true
-
-      - name: print
+      - name: terraform
         env:
             TF_VAR_POLICY_CLIENT_ID: ${{ secrets.TF_VAR_POLICY_CLIENT_ID }}
             TF_VAR_POLICY_SECRET_KEY: ${{ secrets.TF_VAR_POLICY_SECRET_KEY }}
@@ -78,15 +33,36 @@ jobs:
             TF_VAR_CLOUDFLARE_DNS_API_TOKEN: ${{ secrets.TF_VAR_CLOUDFLARE_DNS_API_TOKEN }}
             TF_VAR_CLOUDFLARE_DNS_ZONEID: ${{ secrets.TF_VAR_CLOUDFLARE_DNS_ZONEID }}
             TF_VAR_profile_id: ${{ secrets.TF_VAR_PROFILE_ID }}
+            PROJECT_ID: ${{ secrets.PROJECT_ID }}
+            TF_USERNAME: ${{ secrets.TF_USERNAME }}
+            TF_PASSWORD: ${{ secrets.TF_PASSWORD }}
         run: |
+          export TF_ADDRESS="https://gitlab.com/api/v4/projects/${PROJECT_ID}/terraform/state/tf_state2"
           cd 01-webapps
-          terraform init; terraform validate; 
+          terraform init \
+            -backend-config=address=${TF_ADDRESS} \
+            -backend-config=lock_address=${TF_ADDRESS}/lock \
+            -backend-config=unlock_address=${TF_ADDRESS}/lock \
+            -backend-config=username=${TF_USERNAME} \
+            -backend-config=password=${TF_PASSWORD} \
+            -backend-config=lock_method=POST \
+            -backend-config=unlock_method=DELETE \
+            -backend-config=retry_wait_min=5  
+          terraform validate; 
           terraform plan -var publish=true -out=../tfplan -input=false -no-color
-          terraform show -json ../tfplan > tfplan.json
           terraform apply -auto-approve  ../tfplan
           cd ..
           cd 02-dns
-          terraform init; terraform validate; 
+          terraform init \
+            -backend-config=address=${TF_ADDRESS} \
+            -backend-config=lock_address=${TF_ADDRESS}/lock \
+            -backend-config=unlock_address=${TF_ADDRESS}/lock \
+            -backend-config=username=${TF_USERNAME} \
+            -backend-config=password=${TF_PASSWORD} \
+            -backend-config=lock_method=POST \
+            -backend-config=unlock_method=DELETE \
+            -backend-config=retry_wait_min=5  
+          terraform validate; 
           terraform plan -out=../tfplan-dns -input=false -no-color
           terraform apply -auto-approve ../tfplan-dns 
           cd ..
@@ -118,16 +94,16 @@ jobs:
     #       path: tfplan.json
     #     continue-on-error: true
 
-      - name: Save TF state
-        uses: actions/upload-artifact@v3
-        with:
-          name: tfstate
-          path: 01-webapps/terraform.tfstate
-        continue-on-error: true
+    #   - name: Save TF state
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: tfstate
+    #       path: 01-webapps/terraform.tfstate
+    #     continue-on-error: true
 
-      - name: Save TF state DNS
-        uses: actions/upload-artifact@v3
-        with:
-          name: tfstate-dns
-          path: 02-dns/terraform.tfstate
-        continue-on-error: true
+    #   - name: Save TF state DNS
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: tfstate-dns
+    #       path: 02-dns/terraform.tfstate
+    #     continue-on-error: true

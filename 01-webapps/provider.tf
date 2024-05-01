@@ -1,5 +1,9 @@
 terraform {
+
+    backend "http" {
+  }
   required_providers {
+    
     inext = {
       source  = "CheckPointSW/infinity-next"
       version = "1.0.3"
