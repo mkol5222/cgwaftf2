@@ -89,31 +89,31 @@ jobs:
           cd ..
 
       # generate plain output
-      - run: terraform show -no-color tfplan > terraform.text
+      #- run: terraform show -no-color tfplan > terraform.text
 
       # generate json output
-      - run: terraform show -json tfplan > terraform.json
+      #- run: terraform show -json tfplan > terraform.json
 
-      - uses: ahmadnassri/action-terraform-report@v3
-        with:
-          # tell the action the plan outputs
-          terraform-text: ${{ github.workspace }}/terraform.text
-          terraform-json: ${{ github.workspace }}/terraform.json
-          remove-stale-reports: true
+    #   - uses: ahmadnassri/action-terraform-report@v3
+    #     with:
+    #       # tell the action the plan outputs
+    #       terraform-text: ${{ github.workspace }}/terraform.text
+    #       terraform-json: ${{ github.workspace }}/terraform.json
+    #       remove-stale-reports: true
 
-      - name: Save TF plan
-        uses: actions/upload-artifact@v3
-        with:
-          name: tfplan
-          path: tfplan
-        continue-on-error: true      
+    #   - name: Save TF plan
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: tfplan
+    #       path: tfplan
+    #     continue-on-error: true      
 
-      - name: Save TF plan JSON
-        uses: actions/upload-artifact@v3
-        with:
-          name: tfplanjson
-          path: tfplan.json
-        continue-on-error: true
+    #   - name: Save TF plan JSON
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: tfplanjson
+    #       path: tfplan.json
+    #     continue-on-error: true
 
       - name: Save TF state
         uses: actions/upload-artifact@v3
@@ -126,5 +126,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: tfstate-dns
-          path: 01-dns/terraform.tfstate
+          path: 02-dns/terraform.tfstate
         continue-on-error: true
