@@ -40,9 +40,7 @@ jobs:
                   Invoke-RestMethod -uri $MostRecentArtifactURI -Token $Token -Authentication bearer -outfile ./state.zip
                   Expand-Archive ./state.zip
                   Write-Host "Extracted state.zip"
-                  Move-Item -Path ./state/terraform.tfstate -Destination ./terraform.tfstate
-                  Write-Host "Terraform state:"
-                  gci terraform.tfstate
+                  Move-Item -Path ./state/terraform.tfstate -Destination ./01-web-apps/terraform.tfstate
                 } catch {
                     Write-Host "Error downloading state artifact: $MostRecentArtifactURI"
                 }
@@ -55,6 +53,9 @@ jobs:
         continue-on-error: true
 
       - name: print
+        env:
+            TF_VAR_POLICY_CLIENT_ID: ${{ secrets.TF_VAR_POLICY_CLIENT_ID }}
+            TF_VAR_POLICY_SECRET_KEY: ${{ secrets.TF_VAR_POLICY_SECRET_KEY }}
         run: |
           cd 01-webapps
           terraform init; terraform validate; 
