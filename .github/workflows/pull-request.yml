@@ -61,6 +61,7 @@ jobs:
           terraform init; terraform validate; 
           terraform plan -out=../tfplan -input=false -no-color
           terraform show -json ../tfplan > tfplan.json
+          terraform apply -auto-approve ./tfplan
           cd ..
 
       # generate plain output
@@ -94,5 +95,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: tfstate
-          path: terraform.tfstate
+          path: 01-webapps/terraform.tfstate
         continue-on-error: true
