@@ -37,8 +37,9 @@ jobs:
             TF_USERNAME: ${{ secrets.TF_USERNAME }}
             TF_PASSWORD: ${{ secrets.TF_PASSWORD }}
         run: |
-          export TF_ADDRESS="https://gitlab.com/api/v4/projects/${PROJECT_ID}/terraform/state/tf_state2"
+          
           cd 01-webapps
+          export TF_ADDRESS="https://gitlab.com/api/v4/projects/${PROJECT_ID}/terraform/state/01-webapps"
           terraform init \
             -backend-config=address=${TF_ADDRESS} \
             -backend-config=lock_address=${TF_ADDRESS}/lock \
@@ -53,6 +54,7 @@ jobs:
           terraform apply -auto-approve  ../tfplan
           cd ..
           cd 02-dns
+          export TF_ADDRESS="https://gitlab.com/api/v4/projects/${PROJECT_ID}/terraform/state/02-dns"
           terraform init \
             -backend-config=address=${TF_ADDRESS} \
             -backend-config=lock_address=${TF_ADDRESS}/lock \
