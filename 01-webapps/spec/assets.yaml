@@ -8,5 +8,7 @@
   backend: https://nuxt.com
 - name: ifconfig.klaud.online
   backend: https://ifconfig.me
-- name: ip.klaud.online
+- name: ip2.klaud.online
+  backend: http://ip.iol.cz
+- name: little.demo.klaud.online
   backend: http://ip.iol.cz
