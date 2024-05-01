@@ -4,5 +4,9 @@
   backend: https://dev.to
 - name: ops.klaud.online
   backend: https://community.ops.io
-- name: nuxt2.klaud.online
+- name: nuxt.klaud.online
   backend: https://nuxt.com
+- name: ifconfig.klaud.online
+  backend: https://ifconfig.me
+- name: ip.klaud.online
+  backend: http://ip.iol.cz
