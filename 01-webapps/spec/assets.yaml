@@ -6,3 +6,5 @@
 #   backend: https://community.ops.io
 - name: nuxt2.klaud.online
   backend: https://nuxt.com
+- name: nuxt5.klaud.online
+  backend: https://nuxt.com
