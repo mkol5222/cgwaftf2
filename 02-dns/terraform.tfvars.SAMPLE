@@ -1,0 +1,8 @@
+APPSEC_CLIENT_ID  = "Infinity-Portal-API-KEY-app-AppSec"
+APPSEC_SECRET_KEY = "Infinity-Portal-API-KEY-app-AppSec"
+
+CLOUDFLARE_DNS_API_TOKEN=""
+CLOUDFLARE_DNS_ZONEID=""
+
+# SaaS profile ID
+profile_id = "cec6d6ae-8901-7b1b-485e-ae9cb9b373d8"

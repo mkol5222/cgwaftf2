@@ -1,6 +1,29 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/checkpointsw/infinity-next" {
+  version     = "1.0.3"
+  constraints = "1.0.3"
+  hashes = [
+    "h1:knDBOySCdg3im3Vaw/n8rvtFNTwYf7bKxQJ3GamYJhY=",
+    "zh:02f5afcf3c449037f95d8d68783534f34a23b1e116e00c55e2fe26bb2e1c764c",
+    "zh:0cf1aecdcb05ca37b4d43a8705d646223a9b6dd408ddb3c35659b01d818638f0",
+    "zh:0d219330d0d2b4062e116922bf82396e5b188953ccff1ecb162941cdffc5b610",
+    "zh:2ad3344db5d538d4311728e583cd941e44a4d93af6f844bb4f2289c77b4d0ac1",
+    "zh:32e40171e50519c3a59f569422cf582e7519848dff634c22717069b3136fbd9e",
+    "zh:469e434fb85f5e9a3b66f17a9f74a969bd6361b2b020e69cf8b52ce31b27ec6d",
+    "zh:751283bfa14b7d610182624f72365304c7f62ad43ceade0960ba81175a60b9f6",
+    "zh:77c9a1225553315f5de96f2900ead3aa1407153456752099e41b97169274044a",
+    "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
+    "zh:86d94c9a7a90bd33018353f0ec435a194717d4b89b5ff7b0b0dca8c31ab6cfa3",
+    "zh:8d1a06306cce3863804896569a6fb3458034385bf8d554daa0637675ba4daeaf",
+    "zh:b8909e8226bff6f8a7667b8a90ac6834d6e60888332a2570312b7708987946ea",
+    "zh:e2ce97ced08475f31a8df9ebc7c4bb9cbdf679e4d7c29e8338998ba6dff858b1",
+    "zh:eec74417115be17644a1b58954068072c523a75b686c41cd2001aa6145d90869",
+    "zh:f80c9aa9fbd6a4aceb35bab581256e8184c3b235701546e1bf1b13af12a1d46b",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/http" {
   version = "3.4.2"
   hashes = [

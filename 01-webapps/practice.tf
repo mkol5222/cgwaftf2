@@ -1,8 +1,8 @@
 # OUT: local.practice_id - id of WEB APPLICATION BEST PRACTICE
 
 data "http" "practice" {
-  url        = "https://cloudinfra-gw.portal.checkpoint.com/app/i2/graphql/V1"
-  method     = "POST"
+  url    = "https://cloudinfra-gw.portal.checkpoint.com/app/i2/graphql/V1"
+  method = "POST"
   request_headers = {
     "authorization" = "Bearer ${local.policy_token}"
     "content-type"  = "application/json"
