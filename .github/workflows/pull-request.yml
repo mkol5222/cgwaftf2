@@ -1,0 +1,95 @@
+name: TFplan
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+        
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+        
+      - id: getTerraformFiles
+        name: Get Terraform State
+        run: |
+          $Repo = "${{ github.repository }}"
+          $BaseUri = "https://api.github.com"
+          $ArtifactUri = "$BaseUri/repos/$Repo/actions/artifacts"
+          $Token = "${{ github.token }}" | ConvertTo-SecureString -AsPlainText
+          Write-Host "Artifact URI = $($ArtifactUri): $($Token)"
+          try {
+            $RestResponse = Invoke-RestMethod -Authentication Bearer -Uri $ArtifactUri -Token $Token | Select-Object -ExpandProperty artifacts
+            if ($RestResponse){
+              $MostRecentArtifactURI = $RestResponse | Sort-Object -Property created_at -Descending | where name -eq "tfstate" | Select-Object -First 1 | Select-Object -ExpandProperty archive_download_url
+              Write-Host "Most recent STATE artifact URI = $MostRecentArtifactURI"
+              if ($MostRecentArtifactURI){
+                Write-Host "Downloading artifact to state.zip"
+                try {
+                  Invoke-RestMethod -uri $MostRecentArtifactURI -Token $Token -Authentication bearer -outfile ./state.zip
+                  Expand-Archive ./state.zip
+                  Write-Host "Extracted state.zip"
+                  Move-Item -Path ./state/terraform.tfstate -Destination ./terraform.tfstate
+                  Write-Host "Terraform state:"
+                  gci terraform.tfstate
+                } catch {
+                    Write-Host "Error downloading state artifact: $MostRecentArtifactURI"
+                }
+              }
+            }
+          } catch {
+            Write-Host "Error getting artifacts $($ArtifactUri): $($_.Exception.Message)"
+          }
+        shell: pwsh
+        continue-on-error: true
+
+      - name: print
+        run: |
+          cd 01-webapps
+          terraform init; terraform validate; 
+          terraform plan -out=../tfplan -input=false -no-color
+          terraform show -json ../tfplan > tfplan.json
+          cd ..
+
+      # generate plain output
+      - run: terraform show -no-color tfplan > terraform.text
+
+      # generate json output
+      - run: terraform show -json tfplan > terraform.json
+
+      - uses: ahmadnassri/action-terraform-report@v3
+        with:
+          # tell the action the plan outputs
+          terraform-text: ${{ github.workspace }}/terraform.text
+          terraform-json: ${{ github.workspace }}/terraform.json
+          remove-stale-reports: true
+
+      - name: Save TF plan
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfplan
+          path: tfplan
+        continue-on-error: true      
+
+      - name: Save TF plan JSON
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfplanjson
+          path: tfplan.json
+        continue-on-error: true
+
+      - name: Save TF state
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfstate
+          path: terraform.tfstate
+        continue-on-error: true
