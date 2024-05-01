@@ -4,5 +4,5 @@
 #   backend: https://dev.to
 # - name: ops.klaud.online
 #   backend: https://community.ops.io
-- name: nuxt2.klaud.online
+- name: nuxt6.klaud.online
   backend: https://nuxt.com
