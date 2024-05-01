@@ -35,3 +35,7 @@ resource "cloudflare_record" "validation" {
   type    = "CNAME"
   ttl     = 3600
 }
+
+output "validating_domains" {
+  value = [ for cname in cloudflare_record.validation : cname.name ]
+}

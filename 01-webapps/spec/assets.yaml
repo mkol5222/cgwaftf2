@@ -2,3 +2,5 @@
   backend: https://one.one.one.one
 - name: dev2.klaud.online
   backend: https://dev.to
+- name: ops.klaud.online
+  backend: https://community.ops.io

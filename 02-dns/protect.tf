@@ -24,3 +24,28 @@ output "protection_cnames" {
   value = local.protection_cnames
   
 }
+
+// <none>
+# protection_cnames = [
+#   {
+#     "__typename" = "PublicCNAME"
+#     "cname" = "one4xklaudonline.1d81c053-490f-460e-993d-284ec143aa42.eu-west-1.2f661b613795.i2.checkpoint.com"
+#     "domain" = "one4x.klaud.online"
+
+resource "cloudflare_record" "protection_cname" {
+
+  for_each = { for cname in local.protection_cnames : 
+    cname.domain => cname.cname
+    if cname.cname != "<none>"
+  }
+
+  zone_id = var.CLOUDFLARE_DNS_ZONEID
+  name    = each.key
+  value   = each.value
+  type    = "CNAME"
+  ttl     = 3600
+}
+
+output "finished_domains" {
+  value = [ for cname in cloudflare_record.protection_cname : cname.name ]
+}

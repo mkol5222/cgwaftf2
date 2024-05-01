@@ -46,3 +46,25 @@ terraform init
 terraform plan
 terraform apply -auto-approve
 ```
+
+# 03. WAF CLI to publish/enforce
+
+```shell
+unset GOPATH
+export GOPATH=$HOME/go
+go env | grep GOPATH
+# export $(go env | grep GOPATH)
+go install github.com/CheckPointSW/infinity-next-terraform-cli@latest
+find "$GOPATH/bin"
+$GOPATH/bin/infinity-next-terraform-cli
+# INEXT_CLIENT_ID / INEXT_ACCESS_KEY
+. ./.env.sh
+$GOPATH/bin/infinity-next-terraform-cli -c $INEXT_CLIENT_ID -k $INEXT_ACCESS_KEY -r eu publish
+$GOPATH/bin/infinity-next-terraform-cli -c $INEXT_CLIENT_ID -k $INEXT_ACCESS_KEY -r eu enforce
+
+terraform apply -auto-approve -replace inext_access_token.access_token
+$GOPATH/bin/infinity-next-terraform-cli -c $INEXT_CLIENT_ID -k $INEXT_ACCESS_KEY -r eu publish
+
+terraform destroy
+$GOPATH/bin/infinity-next-terraform-cli -c $INEXT_CLIENT_ID -k $INEXT_ACCESS_KEY -r eu publish
+```
