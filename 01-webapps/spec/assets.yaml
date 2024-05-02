@@ -6,3 +6,6 @@
   backend: http://ip.iol.cz
 - name: nuxt.klaud.online
   backend: http://nuxt.com
+- name: vuejs.klaud.online
+  backend: https://vuejs.org
+
