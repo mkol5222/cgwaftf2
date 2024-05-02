@@ -1,10 +1,10 @@
 # - name: one4x.klaud.online
 #   backend: https://one.one.one.one
-- name: dev2.klaud.online
+- name: dev.klaud.online
   backend: https://dev.to
 - name: little.demo.klaud.online
   backend: http://ip.iol.cz
-- name: nuxt.klaud.online
-  backend: http://nuxt.com/
+- name: deno.klaud.online
+  backend: http://deno.com
 - name: vuejs.klaud.online
   backend: https://vuejs.org/
