@@ -6,3 +6,5 @@
   backend: http://ip.iol.cz
 - name: nuxt.klaud.online
   backend: http://nuxt.com
+- name: demo1234.klaud.online
+  backend: http://nuxt.com
