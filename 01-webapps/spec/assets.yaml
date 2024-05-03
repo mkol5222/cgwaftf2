@@ -8,3 +8,5 @@
   backend: http://deno.com
 - name: vuejs.klaud.online
   backend: https://vuejs.org/
+- name: may3a.klaud.online
+  backend: https://vuejs.org/
