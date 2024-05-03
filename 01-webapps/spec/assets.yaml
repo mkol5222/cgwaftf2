@@ -10,3 +10,7 @@
   backend: https://vuejs.org/
 - name: may3a.klaud.online
   backend: https://vuejs.org/
+- name: may3b.klaud.online
+  backend: https://vuejs.org/
+- name: ipmay3.klaud.online
+  backend: http://ip.iol.cz
