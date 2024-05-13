@@ -14,3 +14,5 @@
   backend: https://vuejs.org/
 - name: may10.klaud.online
   backend: http://ip.iol.cz
+- name: may12.klaud.online
+  backend: http://ip.iol.cz
