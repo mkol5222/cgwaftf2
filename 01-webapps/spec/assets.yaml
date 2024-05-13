@@ -6,9 +6,8 @@
   backend: http://ip.iol.cz
 - name: vuejs.klaud.online
   backend: https://vuejs.org/
-- name: arrowecs.klaud.online
-  backend: https://www.arrow.com
 - name: ip13.klaud.online
   backend: http://ip.iol.cz
-- name: clicocz.klaud.online
-  backend: http://clico.cz
+- name: ifconfig.klaud.online
+  backend: https://ifconfig.me
+

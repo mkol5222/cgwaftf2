@@ -4,7 +4,7 @@
 
 data "http" "enforcePolicy" {
   count      = (var.publish && var.enforce) ? 1 : 0
-  depends_on = [data.http.publishChanges]
+  depends_on = [inext_web_app_asset.webapp-asset, data.http.publishChanges]
 
   url    = "https://cloudinfra-gw.portal.checkpoint.com/app/i2/graphql/V1"
   method = "POST"
