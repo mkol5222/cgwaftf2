@@ -20,3 +20,5 @@
   backend: http://ip.iol.cz
 - name: may13.klaud.online
   backend: http://ip.iol.cz
+- name: arrow.klaud.online
+  backend: https://www.arrow.com
