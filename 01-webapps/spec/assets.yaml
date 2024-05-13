@@ -1,6 +1,6 @@
 # - name: one4x.klaud.online
 #   backend: https://one.one.one.one
-- name: dev.klaud.online
+- name: dev2.klaud.online
   backend: https://dev.to
 - name: little.demo.klaud.online
   backend: http://ip.iol.cz
