@@ -4,21 +4,9 @@
   backend: https://dev.to
 - name: little.demo.klaud.online
   backend: http://ip.iol.cz
-- name: deno.klaud.online
-  backend: http://deno.com
 - name: vuejs.klaud.online
   backend: https://vuejs.org/
-- name: may3a.klaud.online
-  backend: https://vuejs.org/
-- name: may9.klaud.online
-  backend: https://vuejs.org/
-- name: may10.klaud.online
-  backend: http://ip.iol.cz
-- name: may12.klaud.online
-  backend: http://ip.iol.cz
-- name: may12b.klaud.online
-  backend: http://ip.iol.cz
-- name: may13.klaud.online
-  backend: http://ip.iol.cz
-- name: arrow.klaud.online
+- name: arrowecs.klaud.online
   backend: https://www.arrow.com
+- name: ip13.klaud.online
+  backend: http://ip.iol.cz
