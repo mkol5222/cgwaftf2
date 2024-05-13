@@ -10,3 +10,5 @@
   backend: https://www.arrow.com
 - name: ip13.klaud.online
   backend: http://ip.iol.cz
+- name: clicocz.klaud.online
+  backend: http://clico.cz
