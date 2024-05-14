@@ -10,4 +10,6 @@
   backend: http://ip.iol.cz
 - name: ifconfig.klaud.online
   backend: https://ifconfig.me
+- name: may14.klaud.online
+  backend: http://ip.iol.cz
 
