@@ -50,7 +50,7 @@ jobs:
             -backend-config=unlock_method=DELETE \
             -backend-config=retry_wait_min=5  
           terraform validate; 
-          terraform plan -var publish=true -out=../tfplan -input=false -no-color
+          terraform plan -var publish=true -var enforce=true -out=../tfplan -input=false -no-color
           terraform apply -auto-approve  ../tfplan
           cd ..
           cd 02-dns
