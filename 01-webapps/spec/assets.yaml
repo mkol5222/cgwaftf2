@@ -12,11 +12,6 @@
   backend: https://ifconfig.me
 - name: may14.klaud.online
   backend: http://ip.iol.cz
-- name: may15.klaud.online
+- name: may15z.klaud.online
   backend: http://ip.iol.cz
-- name: may15b.klaud.online
-  backend: http://ip.iol.cz
-- name: may15c.klaud.online
-  backend: http://ip.iol.cz
-- name: may15d.klaud.online
-  backend: http://ip.iol.cz
+
