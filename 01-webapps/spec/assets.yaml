@@ -16,3 +16,5 @@
   backend: http://ip.iol.cz
 - name: may20.klaud.online
   backend: http://ip.iol.cz
+- name: may20b.klaud.online
+  backend: http://ip.iol.cz
