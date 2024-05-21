@@ -17,7 +17,7 @@ EOT
 # {"operationName":"PublicCNAME","variables":{"region":"eu-west-1","domains":["${local.webapp_names[0]}"],"profileId":"${local.profile_id}"},"query":"query PublicCNAME($region: String, $domains: [String], $profileId: String) {\n  getPublicCNAME(region: $region, domains: $domains, profileId: $profileId) {\n    domain\n    cname\n    __typename\n  }\n}\n"}
 
 locals {
-  protection_cnames = jsondecode(data.http.protection_cname.body).data.getPublicCNAME
+  protection_cnames = jsondecode(data.http.protection_cname.response_body).data.getPublicCNAME
 }
 
 output "protection_cnames" {

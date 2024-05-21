@@ -15,7 +15,7 @@ EOT
 }
 
 locals {
-  domains = jsondecode(data.http.domains.body)
+  domains = jsondecode(data.http.domains.response_body)
 }
 
 output "domains" {
@@ -24,7 +24,7 @@ output "domains" {
 
 resource "cloudflare_record" "validation" {
 
-  for_each = { for domain in jsondecode(data.http.domains.body).data.getProfile.certificatesDomains :
+  for_each = { for domain in jsondecode(data.http.domains.response_body).data.getProfile.certificatesDomains :
     domain.domain => domain
     if contains(local.domain_names, domain.domain)
   }
