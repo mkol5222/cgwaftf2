@@ -25,6 +25,11 @@ output "protection_cnames" {
   
 }
 
+output "debug_protection_cnames" {
+  value = data.http.protection_cname.response_body
+  
+}
+
 // <none>
 # protection_cnames = [
 #   {
