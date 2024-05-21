@@ -30,6 +30,12 @@ output "debug_protection_cnames" {
   
 }
 
+output "debug_protection_cname_request" {
+  value =  <<EOT
+{"operationName":"PublicCNAME","variables":{"region":"eu-west-1","domains":${jsonencode(local.domain_names)},"profileId":"${var.profile_id}"},"query":"query PublicCNAME($region: String, $domains: [String], $profileId: String) {\n  getPublicCNAME(region: $region, domains: $domains, profileId: $profileId) {\n    domain\n    cname\n    __typename\n  }\n}\n"}
+EOT
+}
+
 // <none>
 # protection_cnames = [
 #   {
