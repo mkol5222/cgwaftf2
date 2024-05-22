@@ -29,13 +29,15 @@ data "http" "debug_protection_cname" {
     "content-type"  = "application/json"
   }
   request_body = <<EOT
-{"operationName":"PublicCNAME","variables":{"region":"eu-west-1","domains":["${each.key}"]},"profileId":"${var.profile_id}"},"query":"query PublicCNAME($region: String, $domains: [String], $profileId: String) {\n  getPublicCNAME(region: $region, domains: $domains, profileId: $profileId) {\n    domain\n    cname\n    __typename\n  }\n}\n"}
+{"operationName":"PublicCNAME","variables":{"region":"eu-west-1","domains":["${each.key}"],"profileId":"${var.profile_id}"},"query":"query PublicCNAME($region: String, $domains: [String], $profileId: String) {\n  getPublicCNAME(region: $region, domains: $domains, profileId: $profileId) {\n    domain\n    cname\n    __typename\n  }\n}\n"}
 EOT
 }
 
 
 output "debug_protection_cname_onebyone" {
-  value = data.http.debug_protection_cname
+  value = for_each = { for domain in local.valid_domains : 
+    domain => jsondecode(http.debug_protection_cname[domain].response_body)
+  }
 }
 
 # {"operationName":"PublicCNAME","variables":{"region":"eu-west-1","domains":["${local.webapp_names[0]}"],"profileId":"${local.profile_id}"},"query":"query PublicCNAME($region: String, $domains: [String], $profileId: String) {\n  getPublicCNAME(region: $region, domains: $domains, profileId: $profileId) {\n    domain\n    cname\n    __typename\n  }\n}\n"}
