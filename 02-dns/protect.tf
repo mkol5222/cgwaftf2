@@ -35,7 +35,7 @@ EOT
 
 
 output "debug_protection_cname_onebyone" {
-  value = for_each = { for domain in local.valid_domains : 
+  value = { for domain in local.valid_domains : 
     domain => jsondecode(http.debug_protection_cname[domain].response_body)
   }
 }
