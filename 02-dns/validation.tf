@@ -39,7 +39,7 @@ resource "cloudflare_record" "validation" {
 locals {
   validating_domains =  [ for cname in cloudflare_record.validation : cname.name ]
   valid_domains = [ for domain in jsondecode(data.http.domains.response_body).data.getProfile.certificatesDomains :
-    domain.domain => domain
+     domain
     if contains(local.domain_names, domain.domain) && domain.certificateValidationStatus == "SUCCESS"
   ]
 }
