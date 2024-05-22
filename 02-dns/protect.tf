@@ -36,7 +36,7 @@ EOT
 
 output "debug_protection_cname_onebyone" {
   value = { for domain in local.valid_domains : 
-    domain => data.http.debug_protection_cname[domain]
+    domain => data.http.debug_protection_cname[domain].response_body
   }
 }
 
