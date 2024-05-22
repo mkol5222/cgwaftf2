@@ -41,7 +41,7 @@ locals {
   valid_domains = [ for domain in jsondecode(data.http.domains.response_body).data.getProfile.certificatesDomains :
     domain.domain => domain
     if contains(local.domain_names, domain.domain) && domain.certificateValidationStatus == "SUCCESS"
-  }
+  ]
 }
 
 output "valid_domains" {
