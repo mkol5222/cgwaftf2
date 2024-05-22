@@ -1,6 +1,9 @@
 # domains to protection CNAMEs
 # IN: local.domain_names, var.profile_id, local.token_appsec
 
+# CHANGES:
+# use local.valid_domains to get the domain names instead of local.domain_names
+
 data "http" "protection_cname" {
 
   url        = "https://cloudinfra-gw.portal.checkpoint.com/app/waf/graphql"
