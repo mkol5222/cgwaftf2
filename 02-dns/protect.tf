@@ -13,7 +13,7 @@ data "http" "protection_cname" {
     "content-type"  = "application/json"
   }
   request_body = <<EOT
-{"operationName":"PublicCNAME","variables":{"region":"eu-west-1","domains":${jsonencode(local.domain_names)},"profileId":"${var.profile_id}"},"query":"query PublicCNAME($region: String, $domains: [String], $profileId: String) {\n  getPublicCNAME(region: $region, domains: $domains, profileId: $profileId) {\n    domain\n    cname\n    __typename\n  }\n}\n"}
+{"operationName":"PublicCNAME","variables":{"region":"eu-west-1","domains":${jsonencode(local.valid_domains)},"profileId":"${var.profile_id}"},"query":"query PublicCNAME($region: String, $domains: [String], $profileId: String) {\n  getPublicCNAME(region: $region, domains: $domains, profileId: $profileId) {\n    domain\n    cname\n    __typename\n  }\n}\n"}
 EOT
 }
 
