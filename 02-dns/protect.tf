@@ -40,6 +40,19 @@ output "debug_protection_cname_onebyone" {
   }
 }
 
+locals {
+  cnames1by1 = { for domain in local.valid_domains : 
+    domain => jsondecode(data.http.debug_protection_cname[domain].response_body)
+  }
+  protection_cnames_1by1 = { for domain in keys(local.cnames1by1) : 
+      domain => local.cnames1by1[domain].data.getPublicCNAME[0].cname
+  }
+}
+
+output "protection_cnames_1by1" {
+  value = local.protection_cnames_1by1
+}
+
 # {"operationName":"PublicCNAME","variables":{"region":"eu-west-1","domains":["${local.webapp_names[0]}"],"profileId":"${local.profile_id}"},"query":"query PublicCNAME($region: String, $domains: [String], $profileId: String) {\n  getPublicCNAME(region: $region, domains: $domains, profileId: $profileId) {\n    domain\n    cname\n    __typename\n  }\n}\n"}
 
 locals {
@@ -69,20 +82,20 @@ EOT
 #     "cname" = "one4xklaudonline.1d81c053-490f-460e-993d-284ec143aa42.eu-west-1.2f661b613795.i2.checkpoint.com"
 #     "domain" = "one4x.klaud.online"
 
-resource "cloudflare_record" "protection_cname" {
+# resource "cloudflare_record" "protection_cname" {
 
-  for_each = { for cname in local.protection_cnames : 
-    cname.domain => cname.cname
-    if cname.cname != "<none>"
-  }
+#   for_each = { for cname in local.protection_cnames : 
+#     cname.domain => cname.cname
+#     if cname.cname != "<none>"
+#   }
 
-  zone_id = var.CLOUDFLARE_DNS_ZONEID
-  name    = each.key
-  value   = each.value
-  type    = "CNAME"
-  ttl     = 3600
-}
+#   zone_id = var.CLOUDFLARE_DNS_ZONEID
+#   name    = each.key
+#   value   = each.value
+#   type    = "CNAME"
+#   ttl     = 3600
+# }
 
-output "finished_domains" {
-  value = [ for cname in cloudflare_record.protection_cname : cname.name ]
-}
+# output "finished_domains" {
+#   value = [ for cname in cloudflare_record.protection_cname : cname.name ]
+# }
