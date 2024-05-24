@@ -1,20 +1,20 @@
 # - name: one4x.klaud.online
 #   backend: https://one.one.one.one
-- name: dev2.klaud.online
+- name: dev3.klaud.online
   backend: https://dev.to
-- name: little.demo.klaud.online
-  backend: http://ip.iol.cz
-- name: vuejs.klaud.online
-  backend: https://vuejs.org/
-- name: ip13.klaud.online
-  backend: http://ip.iol.cz
-- name: ifconfig.klaud.online
-  backend: https://ifconfig.me
-- name: may14.klaud.online
-  backend: http://ip.iol.cz
-- name: may15z.klaud.online
-  backend: http://ip.iol.cz
-- name: may20.klaud.online
-  backend: http://ip.iol.cz
-- name: may20b.klaud.online
-  backend: http://ip.iol.cz
+# - name: little.demo.klaud.online
+#   backend: http://ip.iol.cz
+# - name: vuejs.klaud.online
+#   backend: https://vuejs.org/
+# - name: ip13.klaud.online
+#   backend: http://ip.iol.cz
+# - name: ifconfig.klaud.online
+#   backend: https://ifconfig.me
+# - name: may14.klaud.online
+#   backend: http://ip.iol.cz
+# - name: may15z.klaud.online
+#   backend: http://ip.iol.cz
+# - name: may20.klaud.online
+#   backend: http://ip.iol.cz
+# - name: may20b.klaud.online
+#   backend: http://ip.iol.cz
