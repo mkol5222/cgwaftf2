@@ -41,11 +41,11 @@ output "debug_protection_cname_onebyone" {
 }
 
 locals {
-  cnames1by1 = { for domain in local.valid_domains : 
-    domain => jsondecode(data.http.debug_protection_cname[domain].response_body)
-  }
-  protection_cnames_1by1 = { for domain in keys(local.cnames1by1) : 
-      domain => local.cnames1by1[domain].data.getPublicCNAME[0].cname
+  cnames1by1 = [ for domain in local.valid_domains : 
+    jsondecode(data.http.debug_protection_cname[domain].response_body)
+  ]
+  protection_cnames_1by1 = { for cname in local.cnames1by1 : 
+      cname.data.getPublicCNAME[0].domain => cname.data.getPublicCNAME[0].cname
   }
 }
 
