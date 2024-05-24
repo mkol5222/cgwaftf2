@@ -99,3 +99,18 @@ EOT
 # output "finished_domains" {
 #   value = [ for cname in cloudflare_record.protection_cname : cname.name ]
 # }
+
+resource "cloudflare_record" "protection_cname" {
+
+  for_each = local.protection_cnames_1by1
+
+  zone_id = var.CLOUDFLARE_DNS_ZONEID
+  name    = each.key
+  value   = each.value
+  type    = "CNAME"
+  ttl     = 3600
+}
+
+output "finished_domains" {
+  value = [ for cname in cloudflare_record.protection_cname : cname.name ]
+}
