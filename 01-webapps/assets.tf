@@ -6,6 +6,12 @@ output "assets" {
   value = local.assets
 }
 
+resource "inext_trusted_sources" "my-trusted-source-behavior" {
+  name                = "my sources"
+  min_num_of_sources  = 1
+  sources_identifiers = []
+}
+
 resource "inext_web_app_asset" "webapp-asset" {
   for_each = { for webapp in local.assets : webapp.name => {
     name          = webapp.name
@@ -34,5 +40,10 @@ resource "inext_web_app_asset" "webapp-asset" {
   practice {
     main_mode = local.mode
     id        = local.practice_id
+  }
+trusted_sources = [inext_trusted_sources.my-trusted-source-behavior.id]
+source_identifier {
+    identifier = "XForwardedFor" # enum of ["SourceIP", "XForwardedFor", "HeaderKey", "Cookie"]
+    values     = []
   }
 }
