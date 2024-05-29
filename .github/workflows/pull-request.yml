@@ -69,8 +69,8 @@ jobs:
           terraform apply -auto-approve ../tfplan-dns 
           cd ..
 
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
+      # - name: Setup upterm session
+      #   uses: lhotari/action-upterm@v1
       # generate plain output
       #- run: terraform show -no-color tfplan > terraform.text
 
